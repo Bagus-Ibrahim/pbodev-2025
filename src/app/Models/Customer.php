@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
-    protected $table = 'customers';
-    protected $guarded = ['id'];
+    use HasFactory;
 
-    public function user(): BelongsTo
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+    ];
+
+    /**
+     * Relasi: Satu Customer memiliki banyak Reservasi
+     */
+    public function reservations()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Reservation::class);
     }
 }
